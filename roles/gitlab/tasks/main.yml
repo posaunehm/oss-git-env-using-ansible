@@ -15,3 +15,6 @@
 
 - name: start gitlab
   shell: gitlab-ctl start
+
+- name: modify gitlab public address(use raw ip)
+  shell: sed -i "s|\(^external_url 'http://\)gitlab.example.com\('$\)|\1{{ fqdn }}\2|g" /etc/gitlab/gitlab.rb
