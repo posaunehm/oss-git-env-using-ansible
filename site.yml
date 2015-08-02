@@ -1,0 +1,8 @@
+- name: setup CA environments
+  hosts: targets
+  user: posaunehm
+  become: yes
+  roles:
+    - package
+    - jenkins
+    - gitlab

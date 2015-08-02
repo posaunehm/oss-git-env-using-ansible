@@ -1,0 +1,11 @@
+- name: add EPEL repository
+  template: src=epel.repo dest=/etc/yum.repos.d/epel.repo mode=0644
+
+- name: update yum
+  yum: name=* state=latest
+
+- name: install packages
+  yum: pkg={{ item }} state=present enablerepo=epel
+  with_items:
+    - emacs
+    - tmux

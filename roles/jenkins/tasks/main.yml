@@ -1,0 +1,17 @@
+- name: ensure open JDK 1.6 is at the latest version
+  yum: name=java-1.6.0-openjdk state=latest
+
+- name: get the Jenkins repository
+  get_url: url=http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo dest=/etc/yum.repos.d/jenkins.repo
+
+- name: add the Jenkins repository
+  rpm_key: key=http://pkg.jenkins-ci.org/redhat-stable/jenkins-ci.org.key
+
+- name: ensure jenkins is at the latest version
+  yum: name=jenkins state=latest
+
+- name: chage jenkins port number to 8888
+  shell: sed -i 's/JENKINS_PORT="8080"/JENKINS_PORT="8888"/' /etc/sysconfig/jenkins
+
+- name: ensure jenkins is running and enabled
+  service: name=jenkins state=running enabled=yes
