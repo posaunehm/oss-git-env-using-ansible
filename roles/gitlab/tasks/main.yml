@@ -3,18 +3,22 @@
   with_items:
     - openssh-server
     - postfix
+    - sendmail
 
 - name: ensure postfix is running and enabled
   service: name=postfix state=running enabled=yes
 
+- name: ensure sendmail is running and enabled
+  service: name=sendmail state=running enabled=yes
+
 - name: install gitlab
   yum: name=https://downloads-packages.s3.amazonaws.com/centos-6.5/gitlab-7.3.1_omnibus-1.el6.x86_64.rpm state=present
+
+- name: modify gitlab public address(use raw ip)
+  shell: sed -i "s|\(^external_url 'http://\)gitlab.example.com\('$\)|\1{{ fqdn }}\2|g" /etc/gitlab/gitlab.rb
 
 - name: reconfigure gitlab
   shell: gitlab-ctl reconfigure
 
 - name: start gitlab
   shell: gitlab-ctl start
-
-- name: modify gitlab public address(use raw ip)
-  shell: sed -i "s|\(^external_url 'http://\)gitlab.example.com\('$\)|\1{{ fqdn }}\2|g" /etc/gitlab/gitlab.rb
