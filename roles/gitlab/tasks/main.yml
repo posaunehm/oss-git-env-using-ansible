@@ -6,10 +6,7 @@
     - sendmail
 
 - name: ensure postfix is running and enabled
-  service: name=postfix state=running enabled=yes
-
-- name: ensure sendmail is running and enabled
-  service: name=sendmail state=running enabled=yes
+  service: name=postfix state=started enabled=yes
 
 - name: install gitlab
   yum: name=https://downloads-packages.s3.amazonaws.com/centos-6.5/gitlab-7.3.1_omnibus-1.el6.x86_64.rpm state=present
@@ -22,3 +19,6 @@
 
 - name: start gitlab
   shell: gitlab-ctl start
+
+- name: ensure sendmail is running and enabled
+  service: name=sendmail state=restarted enabled=yes

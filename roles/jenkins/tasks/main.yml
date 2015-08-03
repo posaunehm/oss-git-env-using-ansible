@@ -1,3 +1,8 @@
+- name: install packages
+  yum: pkg={{ item }} state=present enablerepo=epel
+  with_items:
+    - git
+
 - name: ensure open JDK 1.6 is at the latest version
   yum: name=java-1.6.0-openjdk state=latest
 
@@ -14,4 +19,4 @@
   shell: sed -i 's/JENKINS_PORT="8080"/JENKINS_PORT="8888"/' /etc/sysconfig/jenkins
 
 - name: ensure jenkins is running and enabled
-  service: name=jenkins state=running enabled=yes
+  service: name=jenkins state=started enabled=yes
