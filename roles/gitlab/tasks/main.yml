@@ -20,5 +20,5 @@
 - name: start gitlab
   shell: gitlab-ctl start
 
-- name: ensure sendmail is running and enabled
+- name: ensure sendmail is running and enabled   
   service: name=sendmail state=restarted enabled=yes
